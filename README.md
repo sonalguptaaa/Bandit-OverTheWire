@@ -1,1 +1,1 @@
-# Bandit - OverTheWire
+# Bandit OverTheWire
