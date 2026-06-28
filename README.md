@@ -38,4 +38,30 @@ The password you are looking for is: 6y2kwnwK6grgvwvpvLaa2T1cpFEKOhNR
 ```
 **Password for the next level:** 6y2kwnwK6grgvwvpvLaa2T1cpFEKOhNR
 
+exit      # exits current shell/SSH session
+logout    # same thing, alternative command
+Ctrl+D    # keyboard shortcut, does the same
+All three do exactly the same thing,  cleanly disconnect from SSH and return to your terminal. 'exit' is the most universal, works in SSH sessions, after sudo su, inside scripts, everywhere
+
+---
+
+## Level 1 → Level 2 
+
+**Goal:** The password for the next level is stored in a file called - located in the home directory
+
+**Commands used:** ls , cd , cat , file , du , find
+
+**Solution:**
+
+```bash
+bandit1@bandit:~$ ls
+-
+bandit1@bandit:~$ cat ./-
+PK8fYLZg2hnHSz83plBL1iEPKdD3QToB
+```
+
+**Password for the next level:** PK8fYLZg2hnHSz83plBL1iEPKdD3QToB
+
+`-` alone means STDIN (keyboard input) in Linux. `./` prefix forces Linux to treat it as a filename and moreover, special character filenames need `./` or full path. Therefore, used `cat ./-`. 
+
 ---
