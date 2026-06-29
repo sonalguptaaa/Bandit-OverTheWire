@@ -59,9 +59,33 @@ bandit1@bandit:~$ ls
 bandit1@bandit:~$ cat ./-
 PK8fYLZg2hnHSz83plBL1iEPKdD3QToB
 ```
-
 **Password for the next level:** PK8fYLZg2hnHSz83plBL1iEPKdD3QToB
 
 `-` alone means STDIN (keyboard input) in Linux. `./` prefix forces Linux to treat it as a filename and moreover, special character filenames need `./` or full path. Therefore, used `cat ./-`. 
+
+---
+
+## Level 2 → Level 3 
+
+**Goal:** The password for the next level is stored in a file called --spaces in this filename-- located in the home directory
+
+**Commands used:** ls , cd , cat , file , du , find
+
+**Solution:**
+
+```bash
+bandit1@bandit:~$ ls
+--spaces in this filename--
+bandit1@bandit:~$ cat -- "--spaces in this filename--"
+7ZZ2LFrykP2zEyvBl4m3clcL7tGYJPME
+```
+
+**Password for the next level:** 7ZZ2LFrykP2zEyvBl4m3clcL7tGYJPME
+
+As `--spaces in this filename--` starts with `--`, Linux misreads it as a flag instead of a filename. 
+Similarly with using backslashes (`\ `) only escapes spaces in a filename, but does not fix the `--` prefix issue. Linux still reads `--spaces` as a flag only. 
+To fix both problems together, spaces and leading dashes, we must use `--` before the filename. 
+
+So instead of `cat --spaces in this filename--` or `cat --spaces\ in\ this\ filename--`, we must wrap it in `cat -- "--spaces in this filename--"`
 
 ---
