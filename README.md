@@ -250,7 +250,7 @@ bandit6@bandit:~$ grep "" /var/lib/dpkg/info/bandit7.password
 Bmnnvf82KzQlfxgAI2d1zYbr1u9pr3E3
 ```
 
-**Password:** Bmnnvf82KzQlfxgAI2d1zYbr1u9pr3E3
+**Password for the next level:** Bmnnvf82KzQlfxgAI2d1zYbr1u9pr3E3
 
 `grep` stands for Global Regular Expression Print. It is used to search for text inside files.
 
@@ -264,5 +264,58 @@ So it ends up printing the entire content of the file just like the `cat` comman
 This is a clever trick to read a file using `grep`.
 
 When you run `find / ...`, it tries to search everywhere, including folders you don't have permission to access. This creates a lot of annoying "Permission denied" errors. Adding `2>/dev/null` at the end silences all those error messages so you only see the useful result.
+
+---
+
+## Level 7 → Level 8 
+
+**Goal:** The password for the next level is stored in the file data.txt next to the word millionth
+
+**Commands used:** man, grep, sort, uniq, strings, base64, tr, tar, gzip, bzip2, xxd
+
+**Solution:**
+
+```bash
+bandit7@bandit:~$ ls
+data.txt
+bandit7@bandit:~$ nano data.txt
+^W
+Search: millionth
+millionth       VR1ljMayciFxbnUokuQmJFw6QC9VKtub   # The cursor blinks at "millionth"
+```
+Alternative method-
+
+```bash
+bandit7@bandit:~$ ls
+data.txt
+bandit7@bandit:~$ grep "millionth data.txt
+millionth       VR1ljMayciFxbnUokuQmJFw6QC9VKtub
+```
+
+**Password for the next level:** VR1ljMayciFxbnUokuQmJFw6QC9VKtub
+
+Nano is a simple, beginner-friendly text editor available in most Linux systems. You can simply run the command and press Ctrl + W (or ^W). Type the word you want to find, for eg. millionth and enter.
+
+Similarly, there are many other nano shortcuts to get your desired requirements.
+
+Some of the essential shortcuts are-
+
+Ctrl + W → Search for a word (most useful for this level)
+Ctrl + X → Exit nano 
+Ctrl + O → Save the file (Write Out)
+Ctrl + V → Move to next page (down)
+Ctrl + Y → Move to previous page (up)
+Ctrl + C → Show current cursor position (line number)
+Ctrl + K → Cut current line
+Ctrl + U → Paste cut text
+Ctrl + G → Show help menu
+Ctrl + N → Go to next line
+Ctrl + P → Go to previous line
+
+What it does is that `nano` will jump to the first line containing the word "millionth". The password is located right next to it on the same line.
+
+Another way we can find the password is by using `grep`, which is more convenient in this case. 
+
+Even though nano works fine, using grep is faster and more efficient for this level.
 
 ---
