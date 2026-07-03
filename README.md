@@ -381,7 +381,7 @@ This combination is useful whenever you need to find readable content hidden ins
 
 ---
 
-## Level 10 → Level 10  
+## Level 10 → Level 11  
 
 **Goal:** The goal of this level is to log into the game using SSH. The host is bandit.labs.overthewire.org, on port 2220. Username is bandit0 and password is bandit0.
 
