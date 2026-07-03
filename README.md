@@ -409,3 +409,41 @@ Looks like random letters and numbers but it's just encoded, NOT encrypted. Anyo
 
 ---
 
+## Level 11 → Level 12  
+
+**Goal:** The password for the next level is stored in the file data.txt, where all lowercase (a-z) and uppercase (A-Z) letters have been rotated by 13 positions
+
+**Commands used:** grep, sort, uniq, strings, base64, tr, tar, gzip, bzip2, xxd
+
+**Solution:**
+
+```bash
+bandit11@bandit:~$ ls
+data.txt
+bandit11@bandit:~$ cat data.txt | tr 'A-Za-z' 'N-ZA-Mn-za-m' 
+The password is GROozWPO8QyN0mGrjUkID0WCYkZiQxrN
+```
+
+**Password for the next level:** GROozWPO8QyN0mGrjUkID0WCYkZiQxrN
+
+The use of ROT13, i.e. rotate by 13. 
+
+tr 'A-Za-z' 'N-ZA-Mn-za-m'
+
+tr = translate or replace characters
+First part  'A-Za-z' = input all characters
+Second part 'N-ZA-Mn-za-m' = what to replace them with
+
+Each letter shifts 13 positions forward 
+A→N, B→O, C→P ... M→Z
+N→A, O→B, P→C ... Z→M
+
+Same for lowercase:
+a→n, b→o ... m→z
+n→a, o→b ... z→m
+
+ROT13 is a Caesar cipher that rotates every letter by 13 positions. Since the alphabet has 26 letters, ROT13 is its own inverse, applying it twice returns the original text. The `tr` command handles this by mapping each letter to its rotated equivalent. 
+
+ROT13 is NOT encryption, it's simple obfuscation. 
+
+---
