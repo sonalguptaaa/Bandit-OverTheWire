@@ -380,3 +380,32 @@ data.txt is likely a binary file, full of unreadable characters. Strings extract
 This combination is useful whenever you need to find readable content hidden inside binary files.
 
 ---
+
+## Level 10 → Level 10  
+
+**Goal:** The goal of this level is to log into the game using SSH. The host is bandit.labs.overthewire.org, on port 2220. Username is bandit0 and password is bandit0.
+
+**Commands used:** grep, sort, uniq, strings, base64, tr, tar, gzip, bzip2, xxd
+
+**Solution:**
+
+```bash
+bandit10@bandit:~$ ls
+data.txt
+bandit10@bandit:~$ base64 -d data.txt
+The password is pYfOY6HwUsDj5rL9UvyhU7MCmv8vN5Ro
+```
+
+**Password for the next level:** pYfOY6HwUsDj5rL9UvyhU7MCmv8vN5Ro
+
+Base64 is an encoding scheme that converts binary data into readable text using 64 characters (A-Z, a-z, 0-9, +, /). It is NOT encryption, anyone can decode it instantly using `base64 -d`.
+
+For e.g. Original: "Hello" Base64: "SGVsbG8="
+
+Looks like random letters and numbers but it's just encoded, NOT encrypted. Anyone can decode it instantly using Base64.
+
+`base64 data.txt`      # encode (text - base64)
+`base64 -d data.txt`   # decode (base64 - text)    
+
+---
+
