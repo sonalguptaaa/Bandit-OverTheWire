@@ -340,3 +340,43 @@ EjmOSvuAu7sGAHqHVcBDPirRe9T03kxl
 `uniq -u` finds lines that appear only once, but it only works on consecutive duplicate lines. So `sort` must be run first to group all duplicate lines together. 
 
 The pipeline `sort data.txt | uniq -u` is the cleanest solution, sort groups duplicates, uniq -u removes them, leaving only the unique line.
+
+---
+
+## Level 9 → Level 10  
+
+**Goal:** The password for the next level is stored in the file data.txt in one of the few human-readable strings, preceded by several ‘=’ characters.
+
+**Commands used:** grep, sort, uniq, strings, base64, tr, tar, gzip, bzip2, xxd
+
+**Solution:**
+
+```bash
+bandit9@bandit:~$ ls
+data.txt
+bandit9@bandit:~$ strings data.txt | grep "="
+=KGEn
+cL0========== the
+=<P& 
+========== password
+bU=\
+a7=P
+>========== is
+wbp=
+=lR(
+a=-io
+R========== B0s2khmbT9u0geKuOoVGW3JZKhndE3BG
+)=Lc
+x=E$
+```
+
+**Password for the next level::** B0s2khmbT9u0geKuOoVGW3JZKhndE3BG
+
+data.txt is likely a binary file, full of unreadable characters. Strings extracts only printable/readable text then grep narrows it down to lines with "=" prefix.
+`strings` command extracts all human-readable text from any file, even binary files full of garbage data. 
+
+`grep "==="` filters lines containing multiple characters since password is preceded by "=", we used `grep "="`. It shows any line with at least one "=" 
+
+This combination is useful whenever you need to find readable content hidden inside binary files.
+
+---
