@@ -217,7 +217,7 @@ The `find` command was used with multiple filters to narrow down the exact file.
 
 Instead of manually opening every file across multiple subdirectories, combining these three filters immediately pointed to the exact file. The file turned out to be `inhere/maybehere07/.file2`, a hidden file (starts with `.`) inside a subdirectory, which is why simple `ls` wouldn't have found it easily.
 
-Alternative using `-maxdepth`-
+**Alternative using** `-maxdepth`-
 
 ```bash
 bandit5@bandit:~/inhere$ find . -maxdepth 2 -type f -size 1033c ! -executable
@@ -400,7 +400,7 @@ The password is pYfOY6HwUsDj5rL9UvyhU7MCmv8vN5Ro
 
 Base64 is an encoding scheme that converts binary data into readable text using 64 characters (A-Z, a-z, 0-9, +, /). It is NOT encryption, anyone can decode it instantly using `base64 -d`.
 
-For e.g. Original: "Hello", Base64: "SGVsbG8="
+**For e.g.** Original: "Hello", Base64: "SGVsbG8="
 
 Looks like random letters and numbers but it's just encoded, NOT encrypted. Anyone can decode it instantly using Base64.
 
@@ -426,23 +426,23 @@ The password is GROozWPO8QyN0mGrjUkID0WCYkZiQxrN
 
 **Password for the next level:** GROozWPO8QyN0mGrjUkID0WCYkZiQxrN
 
-The use of ROT13, i.e. rotate by 13. 
+The use of **ROT13**, i.e. rotate by 13. 
 
 `tr 'A-Za-z' 'N-ZA-Mn-za-m'`
 
-tr = translate or replace characters
+**tr =** translate or replace characters
 
-First part  'A-Za-z' = input all characters
+**First part =**  'A-Za-z' = input all characters
 
-Second part 'N-ZA-Mn-za-m' = what to replace them with
+**Second part =** 'N-ZA-Mn-za-m' = what to replace them with
 
-Each letter shifts 13 positions forward 
+**Each letter shifts 13 positions forward**
 
 A→N, B→O, C→P ... M→Z
 
 N→A, O→B, P→C ... Z→M
 
-Same for lowercase:
+**Same for lowercase**
 
 a→n, b→o ... m→z
 
@@ -529,17 +529,26 @@ The password is qQYQiHOBPR8zR61qxYqX45quvihF2uzk
 ```
 **Password for the next level:** qQYQiHOBPR8zR61qxYqX45quvihF2uzk
 
-Hexdump - Binary data represented as readable hex characters. Like translating a book into morse code, same information, different format. `xxd -r` translates it back.
+**Hexdump -** Binary data represented as readable hex characters. Like translating a book into morse code, same information, different format. `xxd -r` translates it back.
 
-Compression - Like squeezing a sponge to make it smaller. Each compression tool (gzip, bzip2, tar) squeezes differently. Here the file was squeezed multiple times with different tools, we unsqueeze layer by layer.
+**Compression -** Like squeezing a sponge to make it smaller. Each compression tool (gzip, bzip2, tar) squeezes differently. Here the file was squeezed multiple times with different tools, we unsqueeze layer by layer.
 
-`file` command - After every decompression, `file data` tells us exactly what we're dealing with next.
+**`file` command -** After every decompression, `file data` tells us exactly what we're dealing with next.
 
-Why We Create a Temp Directory?
+**Why We Create a Temp Directory?**
 We're going to create, rename, and delete many files. Working in a temp directory `mktemp -d` keeps everything isolated and gives us full write permissions without affecting anything else on the system.
 
-Method - 
+**Method -**
 
+**Create temp directory and go inside**
+cd $(mktemp -d)
+
+**Copy and reverse hexdump**
+cp ~/data.txt . && xxd -r data.txt > data
+
+**Now keep running these two commands alternately
+until file shows "ASCII text"**
+file data
 # Create temp directory and go inside
 cd $(mktemp -d)
 
@@ -547,16 +556,24 @@ cd $(mktemp -d)
 cp ~/data.txt . && xxd -r data.txt > data
 
 # Now keep running these two commands alternately
-# until file shows "ASCII text"
+# until file shows "ASCII text":
 file data
 
-# Then depending on output:
+# Then depending on output
 mv data data.gz && gzip -d data.gz        # if gzip
 mv data data.bz2 && bzip2 -d data.bz2    # if bzip2
 mv data data.tar && tar -xf data.tar      # if tar
 
 # Repeat file data → decompress → until ASCII text
 # Then
+cat data
+
+mv data data.gz && gzip -d data.gz        # if gzip
+mv data data.bz2 && bzip2 -d data.bz2    # if bzip2
+mv data data.tar && tar -xf data.tar      # if tar
+
+**Repeat file data → decompress → until ASCII text
+Then**
 cat data
 
 ---
