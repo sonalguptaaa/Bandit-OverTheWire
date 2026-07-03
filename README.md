@@ -428,7 +428,7 @@ The password is GROozWPO8QyN0mGrjUkID0WCYkZiQxrN
 
 The use of ROT13, i.e. rotate by 13. 
 
-tr 'A-Za-z' 'N-ZA-Mn-za-m'
+`tr 'A-Za-z' 'N-ZA-Mn-za-m'`
 
 tr = translate or replace characters
 First part  'A-Za-z' = input all characters
