@@ -319,3 +319,24 @@ Another way we can find the password is by using `grep`, which is more convenien
 Even though nano works fine, using grep is faster and more efficient for this level.
 
 ---
+
+## Level 8 → Level 9 
+
+**Goal:** The password for the next level is stored in the file data.txt and is the only line of text that occurs only once
+
+**Commands used:** grep, sort, uniq, strings, base64, tr, tar, gzip, bzip2, xxd
+
+**Solution:**
+
+```bash
+bandit8@bandit:~$ ls
+data.txt
+bandit8@bandit:~$ sort data.txt | uniq -u
+EjmOSvuAu7sGAHqHVcBDPirRe9T03kxl
+```
+
+**Password for the next level:** EjmOSvuAu7sGAHqHVcBDPirRe9T03kxl
+
+`uniq -u` finds lines that appear only once, but it only works on consecutive duplicate lines. So `sort` must be run first to group all duplicate lines together. 
+
+The pipeline `sort data.txt | uniq -u` is the cleanest solution, sort groups duplicates, uniq -u removes them, leaving only the unique line.
