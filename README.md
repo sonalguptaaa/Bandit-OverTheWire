@@ -453,3 +453,110 @@ ROT13 is a Caesar cipher that rotates every letter by 13 positions. Since the al
 ROT13 is NOT encryption, it's simple obfuscation. 
 
 ---
+
+## Level 12 → Level 13 
+
+**Goal:** The password for the next level is stored in the file data.txt, which is a hexdump of a file that has been repeatedly compressed. For this level it may be useful to create a directory under /tmp in which you can work. Use mkdir with a hard to guess directory name. Or better, use the command “mktemp -d”. Then copy the datafile using cp, and rename it using mv (read the manpages!)
+
+**Commands used:** grep, sort, uniq, strings, base64, tr, tar, gzip, bzip2, xxd, mkdir, cp, mv, file
+
+**Solution:**
+
+```bash
+bandit12@bandit:~$ mktemp -d 
+/tmp/tmp.4h5rXqa2Eb
+bandit12@bandit:~$ cd /tmp/tmp.4h5rXqa2Eb
+bandit12@bandit:/tmp/tmp.4h5rXqa2Eb$ cp ~/data.txt .
+bandit12@bandit:/tmp/tmp.4h5rXqa2Eb$ xxd -r data.txt > data
+bandit12@bandit:/tmp/tmp.4h5rXqa2Eb$ ls
+data  data.txt
+bandit12@bandit:/tmp/tmp.4h5rXqa2Eb$ file data
+data: gzip compressed data, was "data2.bin", last modified: Wed Jun 24 14:58:58 2026, max compression, from Unix, original size modulo 2^32 578
+
+bandit12@bandit:/tmp/tmp.4h5rXqa2Eb$ mv data data.gz
+bandit12@bandit:/tmp/tmp.4h5rXqa2Eb$ gzip -d data.gz
+bandit12@bandit:/tmp/tmp.4h5rXqa2Eb$ file data
+data: bzip2 compressed data, block size = 900k
+
+bandit12@bandit:/tmp/tmp.4h5rXqa2Eb$ mv data data.bz2
+bandit12@bandit:/tmp/tmp.4h5rXqa2Eb$ bzip2 -d data.bz2
+bandit12@bandit:/tmp/tmp.4h5rXqa2Eb$ file data
+data: gzip compressed data, was "data4.bin", last modified: Wed Jun 24 14:58:58 2026, max compression, from Unix, original size modulo 2^32 20480
+
+bandit12@bandit:/tmp/tmp.4h5rXqa2Eb$ mv data data.gz
+bandit12@bandit:/tmp/tmp.4h5rXqa2Eb$ gzip -d data.gz
+bandit12@bandit:/tmp/tmp.4h5rXqa2Eb$ file data
+data: POSIX tar archive (GNU)
+
+bandit12@bandit:/tmp/tmp.4h5rXqa2Eb$ mv data data.tar
+bandit12@bandit:/tmp/tmp.4h5rXqa2Eb$ tar -xf data.tar
+bandit12@bandit:/tmp/tmp.4h5rXqa2Eb$ file data
+data: cannot open `data' (No such file or directory)
+
+bandit12@bandit:/tmp/tmp.4h5rXqa2Eb$ tar -xvf data.tar
+data5.bin
+bandit12@bandit:/tmp/tmp.4h5rXqa2Eb$ ls
+data.tar  data.txt  data5.bin
+bandit12@bandit:/tmp/tmp.4h5rXqa2Eb$ file data5.bin
+data5.bin: POSIX tar archive (GNU)
+
+bandit12@bandit:/tmp/tmp.4h5rXqa2Eb$ mv data data5.bin.tar
+mv: cannot stat 'data': No such file or directory
+bandit12@bandit:/tmp/tmp.4h5rXqa2Eb$ mv data5.bin data5.bin.tar
+bandit12@bandit:/tmp/tmp.4h5rXqa2Eb$ tar -xvf data5.bin.tar
+data6.bin
+bandit12@bandit:/tmp/tmp.4h5rXqa2Eb$ file data6.bin
+data6.bin: bzip2 compressed data, block size = 900k
+
+bandit12@bandit:/tmp/tmp.4h5rXqa2Eb$ mv data6.bin data6.bin.bz2
+bandit12@bandit:/tmp/tmp.4h5rXqa2Eb$ bzip2 -d data6.bin.bz2
+bandit12@bandit:/tmp/tmp.4h5rXqa2Eb$ file data6.bin
+data6.bin: POSIX tar archive (GNU)
+
+bandit12@bandit:/tmp/tmp.4h5rXqa2Eb$ mv data6.bin data6.bin.tar
+bandit12@bandit:/tmp/tmp.4h5rXqa2Eb$ tar -xvf data6.bin.tar
+data8.bin
+bandit12@bandit:/tmp/tmp.4h5rXqa2Eb$ file data8.bin
+data8.bin: gzip compressed data, was "data9.bin", last modified: Wed Jun 24 14:58:58 2026, max compression, from Unix, original size modulo 2^32 49
+
+bandit12@bandit:/tmp/tmp.4h5rXqa2Eb$ mv data8.bin data8.bin.gz
+bandit12@bandit:/tmp/tmp.4h5rXqa2Eb$ gzip -d data8.bin.gz
+bandit12@bandit:/tmp/tmp.4h5rXqa2Eb$ file data8.bin
+data8.bin: ASCII text
+
+bandit12@bandit:/tmp/tmp.4h5rXqa2Eb$ cat data8.bin
+The password is qQYQiHOBPR8zR61qxYqX45quvihF2uzk
+```
+**Password for the next level:** qQYQiHOBPR8zR61qxYqX45quvihF2uzk
+
+Hexdump - Binary data represented as readable hex characters. Like translating a book into morse code, same information, different format. `xxd -r` translates it back.
+
+Compression - Like squeezing a sponge to make it smaller. Each compression tool (gzip, bzip2, tar) squeezes differently. Here the file was squeezed multiple times with different tools, we unsqueeze layer by layer.
+
+`file` command - After every decompression, `file data` tells us exactly what we're dealing with next.
+
+Why We Create a Temp Directory?
+We're going to create, rename, and delete many files. Working in a temp directory `mktemp -d` keeps everything isolated and gives us full write permissions without affecting anything else on the system.
+
+Method - 
+
+# Create temp directory and go inside
+cd $(mktemp -d)
+
+# Copy and reverse hexdump
+cp ~/data.txt . && xxd -r data.txt > data
+
+# Now keep running these two commands alternately
+# until file shows "ASCII text"
+file data
+
+# Then depending on output:
+mv data data.gz && gzip -d data.gz        # if gzip
+mv data data.bz2 && bzip2 -d data.bz2    # if bzip2
+mv data data.tar && tar -xf data.tar      # if tar
+
+# Repeat file data → decompress → until ASCII text
+# Then
+cat data
+
+---
