@@ -549,23 +549,23 @@ cp ~/data.txt . && xxd -r data.txt > data
 **Now keep running these two commands alternately
 until file shows "ASCII text"**
 file data
-# Create temp directory and go inside
+**Create temp directory and go inside**
 cd $(mktemp -d)
 
-# Copy and reverse hexdump
+**Copy and reverse hexdump**
 cp ~/data.txt . && xxd -r data.txt > data
 
-# Now keep running these two commands alternately
-# until file shows "ASCII text":
+**Now keep running these two commands alternately
+until file shows "ASCII text"**
 file data
 
-# Then depending on output
+**Then depending on output**
 mv data data.gz && gzip -d data.gz        # if gzip
 mv data data.bz2 && bzip2 -d data.bz2    # if bzip2
 mv data data.tar && tar -xf data.tar      # if tar
 
-# Repeat file data → decompress → until ASCII text
-# Then
+**Repeat file data → decompress → until ASCII text
+Then**
 cat data
 
 mv data data.gz && gzip -d data.gz        # if gzip
