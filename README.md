@@ -400,7 +400,7 @@ The password is pYfOY6HwUsDj5rL9UvyhU7MCmv8vN5Ro
 
 Base64 is an encoding scheme that converts binary data into readable text using 64 characters (A-Z, a-z, 0-9, +, /). It is NOT encryption, anyone can decode it instantly using `base64 -d`.
 
-For e.g. Original: "Hello" Base64: "SGVsbG8="
+For e.g. Original: "Hello", Base64: "SGVsbG8="
 
 Looks like random letters and numbers but it's just encoded, NOT encrypted. Anyone can decode it instantly using Base64.
 
@@ -431,15 +431,21 @@ The use of ROT13, i.e. rotate by 13.
 `tr 'A-Za-z' 'N-ZA-Mn-za-m'`
 
 tr = translate or replace characters
+
 First part  'A-Za-z' = input all characters
+
 Second part 'N-ZA-Mn-za-m' = what to replace them with
 
 Each letter shifts 13 positions forward 
+
 A→N, B→O, C→P ... M→Z
+
 N→A, O→B, P→C ... Z→M
 
 Same for lowercase:
+
 a→n, b→o ... m→z
+
 n→a, o→b ... z→m
 
 ROT13 is a Caesar cipher that rotates every letter by 13 positions. Since the alphabet has 26 letters, ROT13 is its own inverse, applying it twice returns the original text. The `tr` command handles this by mapping each letter to its rotated equivalent. 
