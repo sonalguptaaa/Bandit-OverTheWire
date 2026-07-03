@@ -536,44 +536,29 @@ The password is qQYQiHOBPR8zR61qxYqX45quvihF2uzk
 **`file` command -** After every decompression, `file data` tells us exactly what we're dealing with next.
 
 **Why We Create a Temp Directory?**
+
 We're going to create, rename, and delete many files. Working in a temp directory `mktemp -d` keeps everything isolated and gives us full write permissions without affecting anything else on the system.
 
 **Method -**
 
 **Create temp directory and go inside**
+
 cd $(mktemp -d)
 
 **Copy and reverse hexdump**
+
 cp ~/data.txt . && xxd -r data.txt > data
 
-**Now keep running these two commands alternately
-until file shows "ASCII text"**
-file data
-**Create temp directory and go inside**
-cd $(mktemp -d)
+**Now keep running these two commands alternately until file shows "ASCII text"**
 
-**Copy and reverse hexdump**
-cp ~/data.txt . && xxd -r data.txt > data
-
-**Now keep running these two commands alternately
-until file shows "ASCII text"**
 file data
 
 **Then depending on output**
-mv data data.gz && gzip -d data.gz        # if gzip
-mv data data.bz2 && bzip2 -d data.bz2    # if bzip2
-mv data data.tar && tar -xf data.tar      # if tar
-
-**Repeat file data → decompress → until ASCII text
-Then**
-cat data
 
 mv data data.gz && gzip -d data.gz        # if gzip
-mv data data.bz2 && bzip2 -d data.bz2    # if bzip2
-mv data data.tar && tar -xf data.tar      # if tar
 
-**Repeat file data → decompress → until ASCII text
-Then**
-cat data
+mv data data.bz2 && bzip2 -d data.bz2    # if bzip2
+
+mv data data.tar && tar -xf data.tar      # if tar
 
 ---
