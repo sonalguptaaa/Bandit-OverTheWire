@@ -653,3 +653,53 @@ telnet = older, interactive, human friendly
 nc     = more powerful, scriptable, used in hacking
 
 ---
+
+## Level 15 → Level 16 
+
+**Goal:** The password for the next level can be retrieved by submitting the password of the current level to port 30001 on localhost using SSL/TLS encryption.
+
+Helpful note: Getting “DONE”, “RENEGOTIATING” or “KEYUPDATE”? Read the “CONNECTED COMMANDS” section in the manpage.
+
+**Commands used:** ssh, telnet, nc, ncat, socat, openssl, s_client, nmap, netstat, ss
+
+**Solution:**
+
+```bash
+bandit15@bandit:~$ openssl s_client -quiet -connect localhost:30001
+Connecting to 127.0.0.1
+Can't use SSL_get_servername
+depth=0 CN=SnakeOil
+verify error:num=18:self-signed certificate
+verify return:1
+depth=0 CN=SnakeOil
+verify return:1
+pbLYuZtTg4MgaqfJx8jbA9gKKGqM68A7
+Correct!
+kS0Hf0u5HiXFwKMKFqXvPdOTNGGa0X8V
+```
+
+**Password for the next level:** kS0Hf0u5HiXFwKMKFqXvPdOTNGGa0X8V
+
+Previous level (port 30000): Plain text connection, means data visible to anyone Like shouting your password in public.
+
+This level (port 30001): SSL/TLS encrypted connection, data scrambled like whispering in a soundproof room.
+
+Same concept as:
+
+- HTTP  → plain text (port 80)
+- HTTPS → encrypted (port 443)
+
+We cannot use telnet/nc because it is for plain text only and cannot handle encrypted connections.
+
+Port 30001 REQUIRES encryption. So we need a tool that speaks SSL/TLS hence `openssl s_client` (cryptography toolkit)
+
+Before any data flows, SSL does a handshake:
+
+- Client → Server: "I want encrypted connection"
+- Server → Client: "Here's my certificate + public key"
+- Client → Server: "Verified! Here's session key"
+- Both           : "Encryption established, let's talk"
+
+`-quiet` - Skips all that technical SSL output and just shows the actual conversation which is much cleaner for beginners.
+
+---
