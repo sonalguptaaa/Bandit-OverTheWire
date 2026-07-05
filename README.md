@@ -582,9 +582,33 @@ Make sure to read the error messages as they are informative.
 
 (kali㉿kali)-[~] ssh -i ~/sshkey.private bandit14@bandit.labs.overthewire.org -p 2220
 
-bandit12@bandit:~$
+bandit14@bandit:~$ cat /etc/bandit_pass/bandit14
+aaWecNkG4FhxJQxz07uiwzVP6bJiYS65
 ```
 
-**We needed a private SSH key (sshkey.private) for the next level.**
+**Password for the next level:** aaWecNkG4FhxJQxz07uiwzVP6bJiYS65
+
+
+This level introduces **SSH key-based authentication**, logging in using a cryptographic key file instead of a password. More secure than passwords because keys cannot be brute forced.
+
+ SSH supports key-based authentication using `ssh -i keyfile`
+ 
+`scp` copies files securely between machines using SSH protocol.
+ 
+Private keys MUST have `chmod 600` since SSH refuses looser permissions. Too open (777, 644). SSH error: "Permissions are too open" so "Private key will be ignored". Hence, Access denied.
+
+Correct (600) = Only owner can read. SSH accepts key → login works.
+
+`scp` uses capital `-P` for port, `ssh` uses lowercase `-p`
+
+OTW blocks localhost-to-localhost SSH so you must be connect from outside.
+
+Finding exposed private keys during pentesting = critical vulnerability
+
+---
+
+## Level 14 → Level 15 
+
+
 
 ---
