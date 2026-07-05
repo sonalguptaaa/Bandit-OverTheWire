@@ -609,6 +609,47 @@ Finding exposed private keys during pentesting = critical vulnerability
 
 ## Level 14 → Level 15 
 
+**Goal:** The password for the next level can be retrieved by submitting the password of the current level to port 30000 on localhost.
 
+**Commands used:** ssh, telnet, nc, openssl, s_client, nmap
+
+**Solution:**
+
+```bash
+bandit14@bandit:~$ cd /etc/
+bandit14@bandit:/etc$ telnet localhost 30000
+Trying 127.0.0.1...
+Connected to localhost.
+Escape character is '^]'.
+aaWecNkG4FhxJQxz07uiwzVP6bJiYS65
+
+Correct!
+pbLYuZtTg4MgaqfJx8jbA9gKKGqM68A7
+
+Connection closed by foreign host.
+```
+
+**Password:** pbLYuZtTg4MgaqfJx8jbA9gKKGqM68A7
+
+### How It Actually Works
+Port 30000 on localhost has a service running, waiting for someone to connect and send the current level's password. If correct, it returns the next password.
+
+`telnet` is a simple tool that creates a raw TCP connection to any host and port like knocking on a specific door and having a direct conversation. We used `telnet localhost 30000` to connect directly to that service.
+
+telnet localhost 30000 → connected to the service running on port 30000
+
+We typed the current password: aaWecNkG4FhxJQxz07uiwzVP6bJiYS65
+
+Service responded: "Correct!" means it validated our password.
+
+Service returned next password and connection closes automatically.
+
+### telnet vs nc
+
+Both connect to raw TCP ports and both send/receive plain text data.
+
+telnet = older, interactive, human friendly
+
+nc     = more powerful, scriptable, used in hacking
 
 ---
