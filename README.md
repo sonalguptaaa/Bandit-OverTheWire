@@ -887,7 +887,8 @@ Output uses `<` for old file lines and `>` for new file lines.
 
 - <    = this line is in OLD file
 - >    = this line is in NEW file
-- `---`  = separator between old and new
+-
+- (---) line  = separator between old and new
 - c    = changed (line modified)
 - a    = added (new line)d    = deleted (line removed)
 
