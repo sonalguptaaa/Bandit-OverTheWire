@@ -859,3 +859,27 @@ Pfos/2C+rbNuHjAAAADnJ1ZHlAbG9jYWxob3N0AQIDBA==
   
 ---
 
+## Level 17 → Level 18 
+
+**Goal:** There are 2 files in the homedirectory: passwords.old and passwords.new. The password for the next level is in passwords.new and is the only line that has been changed between passwords.old and passwords.new
+
+NOTE: if you have solved this level and see ‘Byebye!’ when trying to log into bandit18, this is related to the next level, bandit19
+
+**Commands used:** cat, grep, ls, diff
+
+**Solution:**
+
+```bash
+┌──(kali㉿kali)-[~]
+└─$ ssh -i ~/private.key bandit17@bandit.labs.overthewire.org -p 2220
+bandit17@bandit:~$ diff passwords.old passwords.new
+42c42
+< icUh23IUytZLIYhcCaXL18agiSIqymBc
+---
+> OQxXZjELndr90zuhOTDYBEomI0SZITXI
+```
+
+**Password:** > OQxXZjELndr90zuhOTDYBEomI0SZITXI
+
+---
+
