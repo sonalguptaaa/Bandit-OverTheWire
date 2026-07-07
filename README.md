@@ -885,12 +885,15 @@ bandit17@bandit:~$ diff passwords.old passwords.new
 
 Output uses `<` for old file lines and `>` for new file lines. 
 
-- <    = this line is in OLD file
-- >    = this line is in NEW file
--
-- (---) line  = separator between old and new
-- c    = changed (line modified)
-- a    = added (new line)d    = deleted (line removed)
+ `<`    = this line is in OLD file
+
+ `>`    = this line is in NEW file
+ 
+ `---`  = separator between old and new
+ 
+ `c`    = changed (line modified)
+ 
+ `a`    = added (new line)d    = deleted (line removed)
 
 In cybersecurity, `diff` is used in forensics to detect file modifications, compare configuration files before and after an attack, and identify what changed on a compromised system. 
 
