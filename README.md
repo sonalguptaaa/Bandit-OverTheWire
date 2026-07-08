@@ -879,7 +879,7 @@ bandit17@bandit:~$ diff passwords.old passwords.new
 > OQxXZjELndr90zuhOTDYBEomI0SZITXI
 ```
 
-**Password:** > OQxXZjELndr90zuhOTDYBEomI0SZITXI
+**Password:** OQxXZjELndr90zuhOTDYBEomI0SZITXI
 
 `diff` compares two files and shows only what changed between them. Perfect when files are nearly identical and you need to find the difference quickly. 
 
@@ -900,4 +900,6 @@ In cybersecurity, `diff` is used in forensics to detect file modifications, comp
 The `>` line in the output is the changed/new line, which in this case contains the password.
 
 ---
+
+
 
