@@ -1008,3 +1008,66 @@ Without SUID, EUID equals RUID (bandit19) and reading bandit20's password would 
 So `./bandit20-do cat /etc/bandit_pass/bandit20` read the password successfully and we never became bandit20, we just temporarily acted as them for that one command. 
 
 ---
+
+## Level 20 → Level 21  
+
+**Goal:** There is a setuid binary in the homedirectory that does the following: it makes a connection to localhost on the port you specify as a commandline argument. It then reads a line of text from the connection and compares it to the password in the previous level (bandit20). If the password is correct, it will transmit the password for the next level (bandit21).
+
+NOTE: Try connecting to your own network daemon to see if it works as you think
+
+**Commands used:** ssh, nc, cat, bash, screen, tmux, Unix ‘job control’ (bg, fg, jobs, &, CTRL-Z, …)
+
+**Solution:**
+
+```bash
+
+# Terminal 1
+
+bandit20@bandit:~$ echo "4pIjcunZ0fK2vmp3IwfG8Vf7VhxD6pOA" | nc -lvnp 8080 
+Listening on 0.0.0.0 8080
+Connection received on 127.0.0.1 50092
+bW9kBv5WC3P4yoDyf12LSdGuNz5ka6hY
+
+#Terminal 2
+
+bandit20@bandit:~$ ls
+suconnect
+bandit20@bandit:~$ ./suconnect 8080
+Read: 4pIjcunZ0fK2vmp3IwfG8Vf7VhxD6pOA
+Password matches, sending next password
+bandit20@bandit:~$ 
+```
+OR 
+
+```
+bandit20@bandit:~$ echo "4pIjcunZ0fK2vmp3IwfG8Vf7VhxD6pOA" | nc -lvnp 8080 &
+[1] 95
+Listening on 0.0.0.0 8080
+bandit20@bandit:~$ ./suconnect 8080
+Connection received on 127.0.0.1 37994
+Read: 4pIjcunZ0fK2vmp3IwfG8Vf7VhxD6pOA
+Password matches, sending next password
+bW9kBv5WC3P4yoDyf12LSdGuNz5ka6hY
+[1]+  Done                       echo "4pIjcunZ0fK2vmp3IwfG8Vf7VhxD6pOA" | nc -lvnp 8080
+```
+
+**Password for the next level:** 4pIjcunZ0fK2vmp3IwfG8Vf7VhxD6pOA
+
+Daemon = a program running silently in background, waiting for connections/requests without direct user interaction
+
+**Examples:**
+sshd   = SSH daemon (waits for SSH connections)
+httpd  = HTTP daemon (waits for web requests)
+mysqld = MySQL daemon (waits for database queries)
+
+The 'd' at end = daemon
+
+Here, we'll use `nc` 
+
+This level needed two things running simultaneously.
+
+A listener sending the current password, and `suconnect` connecting to validate it. We can acheive it in one terminal as well. We used `&` to push the `nc` listener into the background, acting like a daemon, silently waiting on port 1234 for a connection. 
+
+The moment `./suconnect 1234` ran, it connected to our listener, received the password, validated it, and returned bandit21's password. Once done, the background job automatically closed, shown by `[1]+ Done`.
+
+---
