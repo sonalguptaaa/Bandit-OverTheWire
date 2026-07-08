@@ -1053,7 +1053,14 @@ bW9kBv5WC3P4yoDyf12LSdGuNz5ka6hY
 
 **Password for the next level:** 4pIjcunZ0fK2vmp3IwfG8Vf7VhxD6pOA
 
-Daemon = a program running silently in background, waiting for connections/requests without direct user interaction
+Daemon = a program running silently in background, waiting for connections/requests without direct user interaction.
+
+**Examples:**
+sshd   = SSH daemon (waits for SSH connections)
+httpd  = HTTP daemon (waits for web requests)
+mysqld = MySQL daemon (waits for database queries)
+
+The 'd' at end = daemon
 
 Here, we'll use `nc` 
 
