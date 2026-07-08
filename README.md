@@ -901,5 +901,76 @@ The `>` line in the output is the changed/new line, which in this case contains 
 
 ---
 
+## Level 18 → Level 19 
 
+**Goal:** The password for the next level is stored in a file readme in the homedirectory. Unfortunately, someone has modified .bashrc to log you out when you log in with SSH.
 
+**Commands used:** ssh, ls, cat
+
+**Solution:**
+
+```bash
+┌──(kali㉿kali)-[~]
+└─$ ssh bandit18@bandit.labs.overthewire.org -p 2220 "cat readme"
+                         _                     _ _ _   
+                        | |__   __ _ _ __   __| (_) |_ 
+                        | '_ \ / _` | '_ \ / _` | | __|
+                        | |_) | (_| | | | | (_| | | |_ 
+                        |_.__/ \__,_|_| |_|\__,_|_|\__|
+                                                       
+
+                      This is an OverTheWire game server. 
+            More information on http://www.overthewire.org/wargames
+
+backend: gibson-0
+bandit18@bandit.labs.overthewire.org's password: 
+KpsOfPkcP7i1FlIExk2QEjyt6dw8dxZI
+```
+
+**Alternative Method-**
+
+```
+┌──(kali㉿kali)-[~]
+└─$ ssh bandit18@bandit.labs.overthewire.org -p 2220 -t "bash --norc"
+                         _                     _ _ _   
+                        | |__   __ _ _ __   __| (_) |_ 
+                        | '_ \ / _` | '_ \ / _` | | __|
+                        | |_) | (_| | | | | (_| | | |_ 
+                        |_.__/ \__,_|_| |_|\__,_|_|\__|
+                                                       
+
+                      This is an OverTheWire game server. 
+            More information on http://www.overthewire.org/wargames
+
+backend: gibson-0
+bandit18@bandit.labs.overthewire.org's password: 
+#Enter pwd
+bash-5.3$ ls
+readme
+bash-5.3$ cat readme
+KpsOfPkcP7i1FlIExk2QEjyt6dw8dxZI
+```
+
+**Password for the next level:** KpsOfPkcP7i1FlIExk2QEjyt6dw8dxZI
+
+`.bashrc` is a configuration file that runs automatically every time a bash shell starts, normally used for aliases and environment setup, but can be weaponized to run malicious commands on login. SSH allows running a single command directly without spawning an interactive shell by adding the command in quotes after the connection string `ssh user@host "command"`. This bypasses `.bashrc` entirely since no interactive shell is created. 
+
+**In simple words -**
+
+→ connects to server
+
+→ runs ONLY that command
+
+→ returns output
+
+→ disconnects
+
+This never loads .bashrc
+
+Whereas, `--norc` doesn't load .bashrc at all and `-t` forces terminal allocation.
+
+In cybersecurity this technique is useful for executing commands on systems where the shell is restricted, bypassing shell restrictions/jails, and attackers sometimes modify `.bashrc` for persistence — running malicious code every time the victim opens a terminal.
+
+Always check `.bashrc`, `.bash_profile`, and `.profile` on compromised machines for hidden malicious commands.
+
+---
