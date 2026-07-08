@@ -974,3 +974,37 @@ In cybersecurity this technique is useful for executing commands on systems wher
 Always check `.bashrc`, `.bash_profile`, and `.profile` on compromised machines for hidden malicious commands.
 
 ---
+
+## Level 19 → Level 20  
+
+**Goal:** To gain access to the next level, you should use the setuid binary in the homedirectory. Execute it without arguments to find out how to use it. The password for this level can be found in the usual place (/etc/bandit_pass), after you have used the setuid binary.
+
+**Commands used:** 
+
+**Solution:**
+
+```bash
+bandit19@bandit:~$ ls
+bandit20-do
+bandit19@bandit:~$ ./bandit20-do
+Run a command as another user.
+  Example: ./bandit20-do whoami
+bandit19@bandit:~$ ./bandit20-do whoami
+bandit20
+bandit19@bandit:~$ ./bandit20-do cat /etc/bandit_pass/bandit20
+4pIjcunZ0fK2vmp3IwfG8Vf7VhxD6pOA
+```
+
+**Password for the next level:** 4pIjcunZ0fK2vmp3IwfG8Vf7VhxD6pOA
+
+In this level, a SUID binary called `bandit20-do` was in the home directory. Running it without arguments showed it executes commands as bandit20. Running `./bandit20-do whoami` confirmed this and returned `bandit20` even though we are bandit19.
+
+Every Linux process has three IDs - **RUID** (who you really are - bandit19), **EUID** (who you act as - temporarily bandit20 due to SUID), and **GUID** (same concept but for groups). 
+
+Linux checks EUID not RUID when deciding file access permissions. 
+
+Without SUID, EUID equals RUID (bandit19) and reading bandit20's password would be denied. With SUID set, EUID becomes the file owner (bandit20), granting access to their password file.
+
+So `./bandit20-do cat /etc/bandit_pass/bandit20` read the password successfully and we never became bandit20, we just temporarily acted as them for that one command. 
+
+---
