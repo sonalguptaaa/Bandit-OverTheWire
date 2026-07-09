@@ -1140,8 +1140,9 @@ cat /etc/bandit_pass/$myname > /tmp/$mytarget
 bandit22@bandit:/etc/cron.d$ echo I am user $myname | md5sum | cut -d ' ' -f 1
 7db97df393f40ad1691b6e1fb03d53eb
 ```
-**Password for the next level:** 
+**Password for the next level:** 7db97df393f40ad1691b6e1fb03d53eb
 
 The cron job revealed that `/usr/bin/cronjob_bandit23.sh` runs every minute as user bandit23. The script creates a variable called myname using whoami, which returns bandit23. It then generates an MD5 hash of the string I am user bandit23 and uses that hash as a filename inside `/tmp`. Finally, it copies the contents of `/etc/bandit_pass/bandit23` into that file. By recreating the same hash manually, I can find the temporary file containing the next password.
 
 ---
+
