@@ -1107,3 +1107,41 @@ The key insight: cron jobs run as specific users,  this one ran as bandit22, mea
 
 ---
 
+## Level 22 → Level 23
+
+**Goal:** A program is running automatically at regular intervals from cron, the time-based job scheduler. Look in /etc/cron.d/ for the configuration and see what command is being executed.
+
+NOTE: Looking at shell scripts written by other people is a very useful skill. The script for this level is intentionally made easy to read. If you are having problems understanding what it does, try executing it to see the debug information it prints.
+
+**Commands used:** cron, crontab, crontab(5) (use “man 5 crontab” to access this)
+
+**Solution:**
+
+```bash
+bandit22@bandit:~$ cd /etc/cron.d/
+bandit22@bandit:/etc/cron.d$ ls
+behemoth4_cleanup  cronjob_bandit22  cronjob_bandit24  leviathan5_cleanup    otw-tmp-dir
+clean_tmp          cronjob_bandit23  e2scrub_all       manpage3_resetpw_job
+
+bandit22@bandit:/etc/cron.d$ cat cronjob_bandit23
+@reboot bandit23 /usr/bin/cronjob_bandit23.sh  &> /dev/null
+* * * * * bandit23 /usr/bin/cronjob_bandit23.sh  &> /dev/null
+
+bandit22@bandit:/etc/cron.d$ cat /usr/bin/cronjob_bandit23.sh 
+#!/bin/bash
+
+myname=$(whoami)
+mytarget=$(echo I am user $myname | md5sum | cut -d ' ' -f 1)
+
+echo "Copying passwordfile /etc/bandit_pass/$myname to /tmp/$mytarget"
+
+cat /etc/bandit_pass/$myname > /tmp/$mytarget
+
+bandit22@bandit:/etc/cron.d$ echo I am user $myname | md5sum | cut -d ' ' -f 1
+7db97df393f40ad1691b6e1fb03d53eb
+```
+**Password for the next level:** 
+
+The cron job revealed that `/usr/bin/cronjob_bandit23.sh` runs every minute as user bandit23. The script creates a variable called myname using whoami, which returns bandit23. It then generates an MD5 hash of the string I am user bandit23 and uses that hash as a filename inside `/tmp`. Finally, it copies the contents of `/etc/bandit_pass/bandit23` into that file. By recreating the same hash manually, I can find the temporary file containing the next password.
+
+---
