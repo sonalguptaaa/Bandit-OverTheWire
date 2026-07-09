@@ -1051,7 +1051,7 @@ bW9kBv5WC3P4yoDyf12LSdGuNz5ka6hY
 [1]+  Done                       echo "4pIjcunZ0fK2vmp3IwfG8Vf7VhxD6pOA" | nc -lvnp 8080
 ```
 
-**Password for the next level:** 4pIjcunZ0fK2vmp3IwfG8Vf7VhxD6pOA
+**Password for the next level:** bW9kBv5WC3P4yoDyf12LSdGuNz5ka6hY
 
 Daemon = a program running silently in background, waiting for connections/requests without direct user interaction.
 
