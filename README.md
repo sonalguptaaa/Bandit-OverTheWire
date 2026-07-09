@@ -1081,6 +1081,29 @@ The moment `./suconnect 1234` ran, it connected to our listener, received the pa
 **Solution:**
 
 ```bash
+bandit21@bandit:~$ cd /etc/cron.d/
 
+bandit21@bandit:/etc/cron.d$ ls
+behemoth4_cleanup  cronjob_bandit22  cronjob_bandit24  leviathan5_cleanup    otw-tmp-dir
+clean_tmp          cronjob_bandit23  e2scrub_all       manpage3_resetpw_job
+
+bandit21@bandit:/etc/cron.d$ cat cronjob_bandit22
+@reboot bandit22 /usr/bin/cronjob_bandit22.sh &> /dev/null
+* * * * * bandit22 /usr/bin/cronjob_bandit22.sh &> /dev/null
+
+bandit21@bandit:/etc/cron.d$ cat /usr/bin/cronjob_bandit22.sh
+#!/bin/bash
+chmod 644 /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+cat /etc/bandit_pass/bandit22 > /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+
+bandit21@bandit:/etc/cron.d$ cat /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+RYVux2rHEm9tiXHmLFzuR7Vhx6AZQMEz
 ```
-**Password for the next level:**
+**Password for the next level:** RYVux2rHEm9tiXHmLFzuR7Vhx6AZQMEz
+
+Cron jobs are scheduled tasks that run automatically at set intervals. In `/etc/cron.d/` we found `cronjob_bandit22`, a cron job running every minute as bandit22. Reading the script it runs (`/usr/bin/cronjob_bandit22.sh`) revealed two things: it sets permissions on a temp file to 644 (readable by everyone) and copies bandit22's password into that file. Since the file is world-readable, we just cat'd it directly to get the password.
+
+The key insight: cron jobs run as specific users,  this one ran as bandit22, meaning it had permission to read bandit22's password and write it somewhere WE could read. 
+
+---
+
