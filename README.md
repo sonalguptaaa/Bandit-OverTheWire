@@ -1197,5 +1197,13 @@ bandit23@bandit:~$ cp /tmp/mydir/getpass.sh /var/spool/bandit24/foo/
 bandit23@bandit:~$ sleep 60 && cat /tmp/mydir/password.txt
 hVQMk3lJNsmQ7VF3ubyrNNBom7BOgVXv
 ```
+
 **Password for the next level:** hVQMk3lJNsmQ7VF3ubyrNNBom7BOgVXv
 
+This level required writing my first shell script,a big milestone! The cron job running as bandit24 executes any script found in `/var/spool/bandit24/foo/` that is owned by bandit23. Since we ARE bandit23, we can place a script there that bandit24 will run on our behalf.
+
+The script I wrote simply reads bandit24's password (which only bandit24 can access) and writes it to a file in `/tmp/` that I can read. Once copied to the spool folder, cron runs it within a minute as bandit24, giving us the password without ever being bandit24.
+
+The key lesson: if a privileged user automatically executes files you control, you can make them do anything you want, including reading files you don't have permission to access yourself. 
+
+---
