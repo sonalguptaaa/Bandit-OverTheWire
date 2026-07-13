@@ -1208,7 +1208,7 @@ The key lesson: if a privileged user automatically executes files you control, y
 
 ---
 
-## Level 23 → Level 24
+## Level 24 → Level 25
 
 **Goal:** A daemon is listening on port 30002 and will give you the password for bandit25 if given the password for bandit24 and a secret numeric 4-digit pincode. There is no way to retrieve the pincode except by going through all of the 10000 combinations, called brute-forcing.
 You do not need to create new connections each time.
@@ -1240,5 +1240,12 @@ Wrong! Please enter the correct current password and pincode. Try again.
 The password of user bandit25 is SoHfqMOEqIX2IYKVciZxvgpR9a2Djx4P
 ```
 
+**Password for the next level:** SoHfqMOEqIX2IYKVciZxvgpR9a2Djx4P
+
+Brute forcing is systematically trying every possible combination until finding the correct one. 
+
+Instead of connecting 10000 times (slow), we generated all combinations locally and piped them in one connection, the service reads each line sequentially. Since `output.txt` runs the file and disconnects on it's own, the bash script I wrote will execute the `output.txt` BEFORE it disconnects and we'll get our password.
+
+---
 
 
