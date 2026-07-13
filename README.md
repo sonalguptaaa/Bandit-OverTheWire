@@ -1137,28 +1137,14 @@ echo "Copying passwordfile /etc/bandit_pass/$myname to /tmp/$mytarget"
 
 cat /etc/bandit_pass/$myname > /tmp/$mytarget
 
-bandit22@bandit:/etc/cron.d$ echo I am user $myname | md5sum | cut -d ' ' -f 1
-7db97df393f40ad1691b6e1fb03d53eb
+bandit22@bandit:/etc/cron.d$ echo I am user bandit23 | md5sum | cut -d ' ' -f 1
+8ca319486bfbbc3663ea0fbe81326349
+bandit22@bandit:/etc/cron.d$ cat /temp/8ca319486bfbbc3663ea0fbe81326349
+gKXDTAXnIz3OBxiPjRZ2uqutUlPZrBsw
 ```
-**Password for the next level:** 7db97df393f40ad1691b6e1fb03d53eb
+**Password for the next level:** gKXDTAXnIz3OBxiPjRZ2uqutUlPZrBsw
 
 The cron job revealed that `/usr/bin/cronjob_bandit23.sh` runs every minute as user bandit23. The script creates a variable called myname using whoami, which returns bandit23. It then generates an MD5 hash of the string I am user bandit23 and uses that hash as a filename inside `/tmp`. Finally, it copies the contents of `/etc/bandit_pass/bandit23` into that file. By recreating the same hash manually, I can find the temporary file containing the next password.
 
 ---
 
-## Level 23 → Level 24
-
-**Goal:** A program is running automatically at regular intervals from cron, the time-based job scheduler. Look in /etc/cron.d/ for the configuration and see what command is being executed.
-
-NOTE: This level requires you to create your own first shell-script. This is a very big step and you should be proud of yourself when you beat this level!
-
-NOTE 2: Keep in mind that your shell script is removed once executed, so you may want to keep a copy around…
-
-**Commands used:** cron, crontab, crontab(5) (use “man 5 crontab” to access this)
-
-**Solution:**
-
-```bash
-
-```
-**Password for the next level:** 
