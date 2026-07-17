@@ -1259,4 +1259,83 @@ NOTE: if you’re a Windows user and typically use Powershell to ssh into bandit
 **Solution:**
 
 ```bash
+bandit25@bandit:~$ ls
+bandit26.sshkey
+bandit25@bandit:~$ cat bandit26.sshkey
+-----BEGIN OPENSSH PRIVATE KEY-----
+b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAABlwAAAAdzc2gtcn
+NhAAAAAwEAAQAAAYEAnaAnMX2t9hzZCs5DGxtAm+ul93mVDbs8d4kmrcIblIqUd/Xl2Ain
+Q2Lo8eHrG+z40alkwkUBigyS+WCUgTzLoSiYqN56Xc7fdqWCyWrHkWajejNtm0b3x0bHc/
+0lGzq/AtD64DHoHy9HEZ8BLUaF+0ZBguX9pdEXz05B4hFOyC1TuCUYvxgH+jL4ZlxJ8CN0
+Dj/1Sef+GBegTPjBXOHzulK4XM35M6tUvmC95Zyx8v6hsxTLSsJLny4RG2+jl9zRgZiHds
+O+Pi0EPPqrP/qzSOz6+0noC/dKTTiKOXur3AJdqjZM8bEStdmuG79XRjqCv1YKVV82fMEy
++wP9QkFtMbNvx7XFdJuXY8ST1Au3E40WIeGS2X6cQHhhPZzBtqxSSF4fSQl3VtAso9LVTj
+nTZtAFIL9tPImb9U+BKdJsgw3HeSs1MmTzrXI81ejp6VliL1rktywUlPr8a6kH6A14a1JJ
+en4ug+KUi3/UYvCPVzXjmdXB0Gd7x1Wnkq4m/4fPAAAFiAqgp+4KoKfuAAAAB3NzaC1yc2
+EAAAGBAJ2gJzF9rfYc2QrOQxsbQJvrpfd5lQ27PHeJJq3CG5SKlHf15dgIp0Ni6PHh6xvs
++NGpZMJFAYoMkvlglIE8y6EomKjeel3O33algslqx5Fmo3ozbZtG98dGx3P9JRs6vwLQ+u
+Ax6B8vRxGfAS1GhftGQYLl/aXRF89OQeIRTsgtU7glGL8YB/oy+GZcSfAjdA4/9Unn/hgX
+oEz4wVzh87pSuFzN+TOrVL5gveWcsfL+obMUy0rCS58uERtvo5fc0YGYh3bDvj4tBDz6qz
+/6s0js+vtJ6Av3Sk04ijl7q9wCXao2TPGxErXZrhu/V0Y6gr9WClVfNnzBMvsD/UJBbTGz
+b8e1xXSbl2PEk9QLtxONFiHhktl+nEB4YT2cwbasUkheH0kJd1bQLKPS1U4502bQBSC/bT
+yJm/VPgSnSbIMNx3krNTJk861yPNXo6elZYi9a5LcsFJT6/GupB+gNeGtSSXp+LoPilIt/
+1GLwj1c145nVwdBne8dVp5KuJv+HzwAAAAMBAAEAAAGABjaoQpPAAX+lDFra23z5PnVflz
+Jg5To/IIcriN8Xrzvk9mEM0Ufc5u8g7n7jFAGXZoNC7Poe07Leny35LKp02jBW6xXMV1nA
+4edMWkDSvkNuFk32ZdkoCik/iUAcOTTZWHTKLu1tR1H+WqCc09XI/t0H1u9o4NotyPSHoz
+ADeU0wHfPmH4tyZQ5+dDzN9DMfSumnF/fgC7+nPyqoS4YsrNZ3E78tH6YDDlK3qaF4zbvz
+4rK+kxD/9GyyvsvXPVlIskHpJvWnhVa7vzk0EAZ02P4f0FSBImDZ5NUnF1T+h3eLQlj2XM
+BgzJAsLg4o/DAj/3yQtbcXhKIeq2dLc0cJwHz1e/t7BFC1GjwxXVOVVsw5aKJJOZmgHKpn
+Kc393JQIMnzDS4HTIoa4DZSnX00q7MemRdPQV3rCHlwsIywSW5CrM6eR0xsphhK3WEpkV5
+rU3zkidT0z2Efi1Qs3E2fIuH3okmWN8gZ6zWAgBJHJMlfl/ij3s44vdt3VSKcpUMKBAAAA
+wQCrI/HTiT0XanBM9cAwvnv9wUBeCeLbUJa/r7LOQu8QrrNu9Y/6KUy9gfEEP1saHOiRNN
+LNtxPpcKxYOGqZwrSzAP793raGg7Q3/OIghLPgJaRpfGlS4swxrvqG/ddG4E6+mY8BoRWy
+VjFW5pKxwGCPwpkLvvPOA/0ukC1O1Spc6v1wwSvKcPKBhEQZ6fUtpWLdTn7mKaTHXhVLHv
+WOTyJ8cg3fI36/UkagsiCFUoRamzY6OwZTSeS/X2SGkEvjsBYAAADBAMl3Rzmw4c/l5AjC
+bmKlW/EVDTzeLe4UGePd4PMoJu1YoC8u3sKzv/rbz8vt6tHlwUsvI5NubwJ1pUaIEcL/br
+FbAvkuV9NYUQqMW0qsgecXmQV2MBhZbKwLl8hq9shav6YL4RAjFIl3Xsx9ngH6BHXx51zI
+2LUZXq1EZtw6wdc9glt14/w4m+N+5WRaT641O19o8yKhAHYqnwSTNUOFL8X4gkUCTQbTne
+Ochzn4Q56gP2boTN2frB8hbY3j1BLMHwAAAMEAyErttPP7OJnNrYdbQ3YKVOM69o+YXa0y
+5/K0uLMWTHRbKaMw6m29QuhkAh+pJlxTL5SQWVFfM84V9nvOlxOhOxukJiUdIUMFZD8OM2
+Deak7ZqfRnLrbwGmBKM585fZ4qa+xP3MYhl6ckuvNUsMLX+kub5F9Ka7mUbd48LEbEsqX6
+9lzWEiznRDxqrl6io92M0O90mdfPkiDcF9WZP68Apg2DOqcNMBA9kHA3HvA//Kbva0JEFg
+piuGIiYum5tM5RAAAADnJ1ZHlAbG9jYWxob3N0AQIDBA==
+-----END OPENSSH PRIVATE KEY-----
+
+bandit25@bandit:~$ ssh -i bandit26.sshkey bandit26@bandit.labs.overthewire.org -p 2220
+The authenticity of host '[bandit.labs.overthewire.org]:2220 ([127.0.0.1]:2220)' can't be established.
+ED25519 key fingerprint is: SHA256:C2ihUBV7ihnV1wUXRb4RrEcLfXC5CXlhmAAM/urerLY
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Could not create directory '/home/bandit25/.ssh' (Permission denied).
+Failed to add the host to the list of known hosts (/home/bandit25/.ssh/known_hosts).
+                         _                     _ _ _   
+                        | |__   __ _ _ __   __| (_) |_ 
+                        | '_ \ / _` | '_ \ / _` | | __|
+                        | |_) | (_| | | | | (_| | | |_ 
+                        |_.__/ \__,_|_| |_|\__,_|_|\__|
+                                                       
+
+                      This is an OverTheWire game server. 
+            More information on http://www.overthewire.org/wargames
+
+!!! You are trying to log into this SSH server with a password on port 2220 from localhost.
+!!! Connecting from localhost is blocked to conserve resources.
+!!! Please log out and log in again.
+
+backend: gibson-0
+Received disconnect from 127.0.0.1 port 2220:2: no authentication methods enabled
+Disconnected from 127.0.0.1 port 2220
+bandit25@bandit:~$ 
+bandit25@bandit:~$ cat /etc/passwd | grep bandit26
+bandit26:x:11026:11026:bandit level 26:/home/bandit26:/usr/bin/showtext
+bandit25@bandit:~$ cat /usr/bin/showtext
+#!/bin/sh
+
+export TERM=linux
+
+exec more ~/text.txt
+exit 0
+
+    
+
 ```
