@@ -1301,7 +1301,14 @@ Deak7ZqfRnLrbwGmBKM585fZ4qa+xP3MYhl6ckuvNUsMLX+kub5F9Ka7mUbd48LEbEsqX6
 piuGIiYum5tM5RAAAADnJ1ZHlAbG9jYWxob3N0AQIDBA==
 -----END OPENSSH PRIVATE KEY-----
 
-bandit25@bandit:~$ ssh -i bandit26.sshkey bandit26@localhost -p 2220
+┌──(kali㉿kali)-[~]
+└─$ nano bandit26.sshkey
+                                                                              
+┌──(kali㉿kali)-[~]
+└─$ chmod 600 bandit26.sshkey
+                                                                                 
+┌──(kali㉿kali)-[~]
+└─$ ssh -i bandit26.sshkey bandit26@bandit.labs.overthewire.org -p 2220
 The authenticity of host '[bandit.labs.overthewire.org]:2220 ([127.0.0.1]:2220)' can't be established.
 ED25519 key fingerprint is: SHA256:C2ihUBV7ihnV1wUXRb4RrEcLfXC5CXlhmAAM/urerLY
 This key is not known by any other names.
@@ -1336,6 +1343,21 @@ export TERM=linux
 exec more ~/text.txt
 exit 0
 
-    
+#resize the terminal (to see "more")
 
+----more(66%)----
+
+#hit "v"
+:set shell=/bin/bash
+:shell
+bandit26@bandit:~$
 ```
+**Password for the next level:** 
+
+bandit26's shell isn't bash. It runs a custom script (`showtext`) that displays a file using `more` then exits immediately, preventing normal shell access. 
+
+This is a shell restriction. Breaking out required two tricks: making the terminal small to keep `more` in interactive mode, then pressing `v` to open vim, and using vim's `:set shell=/bin/bash` and `:shell` to spawn a real bash shell.
+
+This is the most I've struggled in the bandit journey but I learnt about "shell escape" which is commonly used in pentesting.
+
+---
