@@ -1565,3 +1565,80 @@ The README showed `xxxxxxxxxx` where the password should be, someone had hidden 
 Tools like `truffleHog` and `git-secrets` exist specifically to scan repositories for accidentally committed credentials. 
 
 ---
+
+## Level 29 → Level 30
+
+**Goal:** There is a git repository at ssh://bandit29-git@bandit.labs.overthewire.org/home/bandit29-git/repo via the port 2220. The password for the user bandit29-git is the same as for the user bandit29.
+
+From your local machine (not the OverTheWire machine!), clone the repository and find the password for the next level. This needs git installed locally on your machine.
+
+**Commands used:** git
+
+**Solution:**
+
+```bash
+┌──(kali㉿kali)-[/tmp]
+└─$ cd repo
+                                                                                                   
+┌──(kali㉿kali)-[/tmp/repo]
+└─$ ls
+README.md
+                                                                                                   
+┌──(kali㉿kali)-[/tmp/repo]
+└─$ cat README.md
+# Bandit Notes
+Some notes for bandit30 of bandit.
+
+## credentials
+
+- username: bandit30
+- password: <no passwords in production!>
+
+                                                                                                   
+┌──(kali㉿kali)-[/tmp/repo]
+└─$ git log                                                                             
+commit b607fba0c867d0bbdf4b4a5e62cd04b79c8fea83 (HEAD -> master, origin/master, origin/HEAD)
+....
+......    initial commit of README.md
+
+diff --git a/README.md b/README.md
+new file mode 100644
+index 0000000..2da2f39
+--- /dev/null
++++ b/README.md
+@@ -0,0 +1,8 @@
++# Bandit Notes
++Some notes for bandit30 of bandit.
++
++## credentials
++
++- username: bandit29
++- password: <no passwords in production!>
++
+(END)
+                                                                                              
+┌──(kali㉿kali)-[/tmp/repo]
+└─$ git branch -a  
+* master
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/dev
+  remotes/origin/master
+  remotes/origin/sploits-dev
+                                                                                                   
+┌──(kali㉿kali)-[/tmp/repo]
+└─$ git show origin/dev:README.md
+# Bandit Notes
+Some notes for bandit30 of bandit.
+
+## credentials
+
+- username: bandit30
+- password: jq9Dfg2rXsfYsWMgFuKlXhphjdH7USgX
+```
+
+**Password for the next level:** jq9Dfg2rXsfYsWMgFuKlXhphjdH7USgX
+
+master branch = production (no passwords)
+dev branch    = development (might have real credentials)
+
+---
