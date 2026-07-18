@@ -1639,6 +1639,7 @@ Some notes for bandit30 of bandit.
 **Password for the next level:** jq9Dfg2rXsfYsWMgFuKlXhphjdH7USgX
 
 master branch = production (no passwords)
+
 dev branch    = development (might have real credentials)
 
 ---
