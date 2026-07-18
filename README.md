@@ -1361,3 +1361,44 @@ This is a shell restriction. Breaking out required two tricks: making the termin
 This is the most I've struggled in the bandit journey but I learnt about "shell escape" which is commonly used in pentesting.
 
 ---
+
+## Level 26 → Level 27
+
+**Goal:** Good job getting a shell! Now hurry and grab the password for bandit27!
+
+**Commands used:** ls
+
+**Solution:**
+
+```bash
+bandit26@bandit:~$ ls
+bandit27-do  text.txt
+bandit26@bandit:~$ cat text.txt
+  _                     _ _ _   ___   __  
+ | |                   | (_) | |__ \ / /  
+ | |__   __ _ _ __   __| |_| |_   ) / /_  
+ | '_ \ / _` | '_ \ / _` | | __| / / '_ \ 
+ | |_) | (_| | | | | (_| | | |_ / /| (_) |
+ |_.__/ \__,_|_| |_|\__,_|_|\__|____\___/ 
+bandit26@bandit:~$ file bandit27-do
+bandit27-do: setuid ELF 32-bit LSB executable, Intel i386, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux.so.2, BuildID[sha1]=55720343cddb2e256343bc366b061e1a71764f51, for GNU/Linux 3.2.0, not stripped
+bandit26@bandit:~$ ls -l bandit27-do
+-rwsr-x--- 1 bandit27 bandit26 14880 Jun 24 14:59 bandit27-do
+bandit26@bandit:~$ ./bandit27-do
+Run a command as another user.
+  Example: ./bandit27-do id
+bandit26@bandit:~$ ./bandit27-do id
+uid=11026(bandit26) gid=11026(bandit26) euid=11027(bandit27) groups=11026(bandit26)
+bandit26@bandit:~$ ./bandit27-do cat /etc/bandit_pass/bandit27
+STJLJBRRphMxKB392CT4iOr5CbzPU9ER
+
+#exit
+```
+
+**Password for the next level:** STJLJBRRphMxKB392CT4iOr5CbzPU9ER
+
+The inside that shell we found a SUID binary owned by bandit27. Running `./bandit27-do id` confirmed EUID=bandit27, proving we were temporarily acting as bandit27. 
+
+Using it to cat bandit27's password file worked because Linux checked EUID (bandit27) not RUID (bandit26) for permission. 
+
+---
