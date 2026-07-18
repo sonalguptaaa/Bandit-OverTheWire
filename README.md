@@ -1643,3 +1643,48 @@ master branch = production (no passwords)
 dev branch    = development (might have real credentials)
 
 ---
+
+## Level 30 → Level 31
+
+**Goal:** There is a git repository at ssh://bandit30-git@bandit.labs.overthewire.org/home/bandit30-git/repo via the port 2220. The password for the user bandit30-git is the same as for the user bandit30.
+
+From your local machine (not the OverTheWire machine!), clone the repository and find the password for the next level. This needs git installed locally on your machine.
+
+**Commands used:** git
+
+**Solution:**
+
+```bash
+┌──(kali㉿kali)-[/tmp]
+└─$ cd repo 
+                                                                                                 
+┌──(kali㉿kali)-[/tmp/repo]
+└─$ ls
+README.md
+                                                                                                 
+┌──(kali㉿kali)-[/tmp/repo]
+└─$ cat README.md                            
+just an epmty file... muahaha
+                                                                                                 
+┌──(kali㉿kali)-[/tmp/repo]
+└─$ git log                                                                             
+commit 929c564cd34ca667773e2eb02f74b514bc4eeebf (HEAD -> master, origin/master, origin/HEAD)
+Author: Ben Dover <noone@overthewire.org>
+Date:   Wed Jun 24 14:59:25 2026 +0000
+
+    initial commit of README.md
+                                                                                                 
+┌──(kali㉿kali)-[/tmp/repo]
+└─$ git tag
+secret
+                                                                                                 
+┌──(kali㉿kali)-[/tmp/repo]
+└─$ git show secret                                                    
+82NkymblpGBYmIXG6ZQ8YldBYstHpfUf
+```
+
+**Password for the next level:** 82NkymblpGBYmIXG6ZQ8YldBYstHpfUf
+
+This challenge introduced the concept that Git repositories contain metadata beyond the current working tree, such as commits, branches, and tags, which can be inspected using Git commands to uncover hidden information.
+
+---
